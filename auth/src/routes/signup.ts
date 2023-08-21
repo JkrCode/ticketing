@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { validateRequest } from '../middlewares/validate-request'
+import { validateRequest, BadRequestError } from '@jkremer_org/common'
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
 
 const router = express.Router();
 
@@ -37,13 +36,11 @@ router.post(
         email: user.email
       }, process.env.JWT_KEY! 
     )
-    console.log(userJwt)
 
     //Store it on session Object
     req.session = {
       jwt: userJwt
     }
-    console.log(req.session)
 
     res.status(201).send(user);
   }
