@@ -2,21 +2,27 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError, currentUser } from '@jkremer_org/common';
+import { createTicketRouter } from './routes/new';
+import { showTicketRouter } from './routes/show';
+import { indexTicketRouter } from './routes/index';
+import { updateTicketRouter } from './routes/update';
 
-
-import { errorHandler, NotFoundError } from '@jkremer_org/common';
-
-
-//order is important -> use cookie session before handing over routers
 const app = express();
-app.set('trusty proxy', true);
+app.set('trust proxy', true);
 app.use(json());
-app.use(cookieSession({
-  signed:false,
-  //secure: process.env.NODE_ENV !== 'test' <- this does not work in browser
-}))
+app.use(
+  cookieSession({
+    signed: false,
+    secure: process.env.NODE_ENV !== 'test',
+  })
+);
+app.use(currentUser);
 
-//handing over routers
+app.use(createTicketRouter);
+app.use(showTicketRouter);
+app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
@@ -24,4 +30,4 @@ app.all('*', async (req, res) => {
 
 app.use(errorHandler);
 
-export {app};
+export { app };

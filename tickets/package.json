@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "test": "jest --watchAll --no-Cache"
+    "test": "jest --watchAll --no-cache"
   },
   "jest": {
     "preset": "ts-jest",
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jkremer_org/common": "^1.0.4",
+    "@jkremer_org/common": "^1.0.5",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
