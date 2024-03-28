@@ -31,4 +31,6 @@ app.all('*', async (req, res) => {
 
 app.use(errorHandler);
 
+print("hello")
+
 export {app};
